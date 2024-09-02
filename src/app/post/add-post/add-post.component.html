@@ -1,0 +1,49 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card shadow-effect bg-secondary-theme">
+        <div class="card-body text-center">
+          <h3 class="text-theme-primary">All blog post</h3>
+          <p>From here you can manage your post here</p>
+          <button class="btn-theme" routerLink="/post/new">Add new post</button>
+          <button class="btn btn-sm btn-warning ml-2 p-2" routerLink="/">Back to dashboard</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card shadow-effect">
+        <div class="card-body">
+          <table class="table table-hover table-responsive" >
+            <thead>
+              <tr>
+                <th>No</th>
+                <th>Post Image</th>
+                <th>Title</th>
+                <th>Excerpt</th>
+                <th>Category</th>
+                <th>Date</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let ap of allPost; let i = index">
+                <td>{{i+1}}</td>
+                <td class="width"><img src="{{ ap.data.postImgPath }}" class="img img-fluid"></td>
+                <td>{{ ap.data.title }}</td>
+                <td>{{ ap.data.excerpt }}</td>
+                <td>{{ ap.data.category.category }}</td>
+                <td>{{ ap.data.createdAt.toMillis() | date}}</td>
+                <td routerLink="/post/new" [queryParams]="{id:ap.id}"><i class="far fa-edit"></i></td>
+                <td><i class="fas fa-trash " (click)="onDelete(ap.data.postImgPath,ap.id)"></i></td>
+                <td  *ngIf="!ap.data.featured"><button type="button" class="btn btn-success" (click)="onFeatured(ap.id,true)">Mark featured</button></td>
+                <td  *ngIf="ap.data.featured"><button type="button" class="btn btn-warning" (click)="onFeatured(ap.id,false)">Remove Featured</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
